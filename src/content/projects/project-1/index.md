@@ -1,76 +1,12 @@
 ---
-title: "Astro Sphere"
-description: "Portfolio and blog build with astro."
-date: "Mar 18 2024"
-demoURL: "https://astro-sphere-demo.vercel.app"
-repoURL: "https://github.com/markhorn-dev/astro-sphere"
+title: "Encrypted Peer-to-Peer Messaging."
+description: "A library to support secret message exchange between Bitcoin nodes."
+date: "Apr 2 2024"
+repoURL: "https://github.com/rust-bitcoin/bip324"
 ---
 
-![Astro Sphere Lighthouse Score](/astro-sphere.jpg)
+## BIP324 Encrypted Transport Protocol
 
-Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
+[BIP324](https://github.com/bitcoin/bips/blob/master/bip-0324.mediawiki) describes an encrypted communication protocol over the Bitcoin P2P network. Encrypted messages offer a number of benefits over plaintext communication, even though the data exchanged over the Bitcoin P2P network is public to some degree. For instance, plaintext message tampering without detection is trivial for a man in the middle (MitM) attacker. Additionally, a nefarious actor may associate metadata such as IP addresses and transaction origins without explicitly having to connect directly to peers. BIP 324 - "V2" - transport forces nefarious observers to actively connect to peers as opposed to passively observing network traffic, and makes packet tampering detectable. Furthermore, V2 messages over TCP/IP look no different from random noise, making Bitcoin P2P packets indistinguishable from other network packets. 
 
-It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
-
-## 🚀 Deploy your own
-
-<div class="flex gap-2">
-  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere">
-    <img src="/deploy_vercel.svg" />
-  </a>
-  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere">
-    <img src="/deploy_netlify.svg" />
-  </a>
-</div>
-
-## 📋 Features
-
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-- ✅ Searchable content (posts and projects)
-
-## 💯 Lighthouse score
-![Astro Sphere Lighthouse Score](/lighthouse.png)
-
-## 🕊️ Lightweight
-All pages under 100kb (including fonts)
-
-## ⚡︎ Fast
-Rendered in ~40ms on localhost
-
-## 📄 Configuration
-
-The blog posts on the demo serve as the documentation and configuration.
-
-## 💻 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run sync`            | Generates TypeScript types for all Astro modules.|
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run lint`            | Run ESLint                                       |
-| `npm run lint:fix`        | Auto-fix ESLint issues                           |
-
-## 🏛️ License
-
-MIT
+To minimize dependencies and prepare a codebase that fits the [Rust Bitcoin Community](https://github.com/rust-bitcoin) code standards, all encryption is built from scratch, including the [__ChaCha20__](https://cyberw1ng.medium.com/understanding-chacha20-encryption-a-secure-and-fast-algorithm-for-data-protection-2023-a80c208c1401) and [__ChaCha20Poly1305__](https://en.wikipedia.org/wiki/ChaCha20-Poly1305) encryption algorithms. While __ChaCha20__ is actually quite understandable in its algorithmic implementation, the __Poly1305__ algorithm proved to be a challenging rabbit hole. This repository touches many programming topics, from TCP, multithreading, cryptography, and writing library code capable of a variety build targets.

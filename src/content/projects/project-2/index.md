@@ -1,79 +1,15 @@
 ---
-title: "Astro Nano"
-description: "Minimal portfolio and blog build with astro and no frameworks."
-date: "Mar 26 2024"
-demoURL: "https://astro-nano-demo.vercel.app"
-repoURL: "https://github.com/markhorn-dev/astro-nano"
+title: "Kyoto: a Bitcoin node in your pocket."
+description: "More privacy for more people."
+date: "Apr 2 2024"
+repoURL: "https://github.com/rustaceanrob/kyoto"
 ---
 
-![Astro Nano](/astro-nano.png)
+Running a full archival node is a resource intensive endeavour that only a few passionate individuals choose to take on. Many users and developers rely on third party chain-oracles 
+to inform them about the transactions related to their wallet. There are a number of concerns with this, not only from a privacy point-of-view, as the service knows the user's entire 
+transaction history, but servers may also go down, get hacked, or otherwise become unresponsive. Especially in the context of the Lightning Network, this can result in a loss of user funds.
+Kyoto is a light-client that attempts to bridge the gap between a Bitcoin full-node and a trusted third-party. While the premise sounds simple, there is a lot more happening behind the curtain
+of Kyoto than one might think.
 
-Astro Nano is a static, minimalist, lightweight, lightning fast portfolio and blog theme.
-
-Built with Astro, Tailwind and Typescript, an no frameworks.
-
-It was designed as an even more minimal theme than my popular theme [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
-
-## 🚀 Deploy your own
-
-<div class="flex gap-2">
-  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-nano">
-    <img src="/deploy_vercel.svg" />
-  </a>
-  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-nano">
-    <img src="/deploy_netlify.svg" />
-  </a>
-</div>
-
-## 📋 Features
-
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-
-## 💯 Lighthouse score
-![Astro Nano Lighthouse Score](/lighthouse.png)
-
-## 🕊️ Lightweight
-No frameworks or added bulk
-
-## ⚡︎ Fast
-Rendered in ~40ms on localhost
-
-## 📄 Configuration
-
-The blog posts on the demo serve as the documentation and configuration.
-
-## 💻 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run dev:network`     | Starts local dev server on local network         |
-| `npm run sync`            | Generates TypeScript types for all Astro modules.|
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run preview:network` | Preview build on local network                   |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run lint`            | Run ESLint                                       |
-| `npm run lint:fix`        | Auto-fix ESLint issues                           |
-
-## 🏛️ License
-
-MIT
+Kyoto is built upon the [BIP157](https://github.com/bitcoin/bips/blob/master/bip-0157.mediawiki) and [BIP158](https://github.com/bitcoin/bips/blob/master/bip-0158.mediawiki) specifications, which
+describe how Bitcoin full-nodes can encode data about blocks in a clever way that preserves privacy for light-clients like Kyoto when requesting blocks. Moreover, Kyoto speaks the Bitcoin P2P protocol, meaning a Kyoto node handles, sends, and responds to messages sent by other nodes. Similar to a web server, Kyoto spawns and manages multiple asynchronous threads to handle multiple peers, and processes a number of different Bitcoin P2P messages to recreate the blockchain history, resolve disputes, and scan for transactions. Kyoto will also leverage encrypted messages soon with an integration of a library maintained by yours truly (and my buddy Nick).
