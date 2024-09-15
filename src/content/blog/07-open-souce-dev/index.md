@@ -5,8 +5,6 @@ description: "How to contribute to projects you like"
 
 ---
 
-**I am mostly posting this so I remember the git commands**
-
 - Fork the repository you are interested in. 
 
 - Clone from your personal repository: `git clone https://github.com/<me>/<repo>.git`. 

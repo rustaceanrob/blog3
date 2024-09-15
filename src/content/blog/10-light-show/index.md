@@ -9,7 +9,9 @@ description: "Creating a strobe light."
 
 For no reason at all, I decided to see what it was like to write embedded firmware with Rust. After watching some videos, I picked up a microbit:v2 microcontroller from SparkFun. With a board this popular, and especially because this board is typically used for education, the libraries available abstract away all of the scary logic with manipulating registers. The `microbit-v2` crate exposes a nice API, that essentially makes it no different from writing standard Rust code.
 
-Another project lead me to write a ChaCha20 stream-cipher implementation. All that you need to know is this structure can scramble up bytes to make them look psuedorandom. I used this to make the 25 LED pins flash randomly. The result is a random strobe light.
+Another project lead me to write a ChaCha20 stream-cipher implementation. All that you need to know is this structure can scramble up bytes to make them look psuedorandom. I used this to make the 25 LED pins flash randomly. The result is a random strobe light. 
+
+Randomness generator with no on-board randomness support, not bad.
 
 ## The Code
 

@@ -7,7 +7,7 @@ description: "Constructing transations from raw bytes of data."
 
 ## Context
 
-Some programmers adhere to the don't repeat yourself principle. I ignored that rule in every part of this assignment. In this code I construct some Bitcoin transactions from different sets of byte arrays. Some were signatures, others were hashes, all of them made me feel like I was in hell. The result of my code was a transaction that recorded my name in the Chaincode Signet blockchain. My name is sadly recorded as **rOB** instead of ROB in ASCII. You can find it [here](https://mempool.btcfoss.bitherding.com/tx/6d2e62cc7db1a88178eb4eb777f1243a9bf67e19a0f30a9f4ba80dc91097ec6a#flow=&vout=0). This was the week 2 exercise for the **Chaincode: Start Your Career in FOSS** program.
+Some programmers adhere to the don't repeat yourself principle. I ignored that rule in every part of this assignment. In this code I construct some Bitcoin transactions from different sets of byte arrays. Some were signatures, others were hashes, all of them made me feel like I was in hell. The result of my code was a transaction that recorded my name in the Chaincode Signet blockchain. My name is sadly recorded as **rOB** instead of ROB in ASCII. This was the week 2 exercise for the **Chaincode: Start Your Career in FOSS** program.
 
 ```rust
 #![allow(unused)]
