@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/rust.png" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/svg+xml" href="/rust.png" media="(prefers-color-scheme: light)"><link rel="icon" type="image/x-icon" href="/rust.png"><meta name="generator" content="Astro v4.15.4"><!-- Font preloads --><link rel="preload" href="/_astro/inter-latin-400-normal.BT1H-PT_.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/inter-latin-600-normal.B2Ssfs8e.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/lora-latin-400-normal.CvHVDnm4.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/lora-latin-600-normal.DUWh3m6k.woff2" as="font" type="font/woff2" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://rustaceanrob.github.io/blog/14-api/"><!-- Primary Meta Tags --><title>Building APIs in Rust | @rustaceanrob</title><meta name="title" content="Building APIs in Rust | @rustaceanrob"><meta name="description" content="Tips and tricks along the way"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://rustaceanrob.github.io/blog/14-api/"><meta property="og:title" content="Building APIs in Rust | @rustaceanrob"><meta property="og:description" content="Tips and tricks along the way"><meta property="og:image" content="https://rustaceanrob.github.io/nano.png"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://rustaceanrob.github.io/blog/14-api/"><meta property="twitter:title" content="Building APIs in Rust | @rustaceanrob"><meta property="twitter:description" content="Tips and tricks along the way"><meta property="twitter:image" content="https://rustaceanrob.github.io/nano.png"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script>
+  function init() {
+    preloadTheme();
+    onScroll();
+    animate();
+
+    const backToTop = document.getElementById("back-to-top");
+    backToTop?.addEventListener("click", (event) => scrollToTop(event));
+
+    const backToPrev = document.getElementById("back-to-prev");
+    backToPrev?.addEventListener("click", () => window.history.back());
+
+    const lightThemeButton = document.getElementById("light-theme-button");
+    lightThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "light");
+      toggleTheme(false);
+    });
+
+    const darkThemeButton = document.getElementById("dark-theme-button");
+    darkThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "dark");
+      toggleTheme(true);
+    });
+
+    const systemThemeButton = document.getElementById("system-theme-button");
+    systemThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "system");
+      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    });
+
+    window.matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", event => {
+        if (localStorage.theme === "system") {
+          toggleTheme(event.matches);
+        }
+      }
+    );
+
+    document.addEventListener("scroll", onScroll);
+  }
+
+  function animate() {
+    const animateElements = document.querySelectorAll(".animate");
+
+    animateElements.forEach((element, index) => {
+      setTimeout(() => {
+        element.classList.add("show");
+      }, index * 150);
+    });
+  }
+
+  function onScroll() {
+    if (window.scrollY > 0) {
+      document.documentElement.classList.add("scrolled");
+    } else {
+      document.documentElement.classList.remove("scrolled");
+    }
+  }
+
+  function scrollToTop(event) {
+    event.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+function toggleTheme(dark) {
+    const css = document.createElement("style");
+
+    css.appendChild(
+      document.createTextNode(
+        `* {
+             -webkit-transition: none !important;
+             -moz-transition: none !important;
+             -o-transition: none !important;
+             -ms-transition: none !important;
+             transition: none !important;
+          }
+        `,
+      )
+    );
+
+    document.head.appendChild(css);
+
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+  window.getComputedStyle(css).opacity;
+    document.head.removeChild(css);
+  }
+
+  function preloadTheme() {
+    const userTheme = localStorage.theme;
+
+    if (userTheme === "light" || userTheme === "dark") {
+      toggleTheme(userTheme === "dark");
+    } else {
+      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => init());
+  document.addEventListener("astro:after-swap", () => init());
+  preloadTheme();
+</script><link rel="stylesheet" href="/_astro/_slug_.CbHDodmE.css"><script type="module" src="/_astro/hoisted.JmkTFhge.js"></script></head> <body> <header> <div class="mx-auto max-w-screen-sm px-5">  <div class="flex flex-wrap gap-y-2 justify-between"> <a href="/" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out">  <div class="font-semibold"> @rustaceanrob </div>  </a> <nav class="flex gap-1"> <a href="/blog" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+blog
+ </a> <span> / </span> <a href="/work" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+work
+ </a> <!-- <span>
+          {`/`}
+        </span> --> <!-- <Link href="/projects">
+          projects
+        </Link> --> </nav> </div>  </div> </header> <main>  <div class="mx-auto max-w-screen-sm px-5">  <div class="animate"> <a href="/blog" class="relative group w-fit flex pl-7 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 left-2 -translate-y-1/2 size-4 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-2 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 5 12 12 19" class="translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> <div class="text-sm"> 
+Back to blog
+ </div> </a> </div> <div class="space-y-1 my-10"> <div class="animate flex items-center gap-1.5"> <div class="font-base text-sm"> <time datetime="2024-09-21T10:00:00.000Z"> Sep 21, 2024 </time> </div>
+&bull;
+<div class="font-base text-sm"> 7 min read </div> </div> <div class="animate text-2xl font-semibold text-black dark:text-white"> Building APIs in Rust </div> </div> <article class="animate"> <p>I recently released a <code>v0.1.0</code> for my project Kyoto. If you aren’t familiar with Kyoto, it is a Bitcoin pseudo-node, which implements part of the peer-to-peer messaging layer and requests blocks for a wallet. Without underlying wallet software to make use of the Bitcoin blocks, Kyoto is mostly worthless; however, in combination with wallet software, Kyoto is a powerful tool to increase user privacy at a very low cost. The ultimate goal of the project is to allow users a viable alternative to running a full archival node, but, to achieve that goal,  developers have to incorporate Kyoto into their software. This symbiotic relationship between my project and other projects is why I needed to focus on great documentation and a great API for Kyoto.</p>
+<p>So what makes a great library? I am going to ignore the obvious, which I consider to be detailed documentation, unit tests, integration tests, bench-marking when applicable, avoiding panics, and reasonable project design. From my experience, I will share some more subtle things that helped me get to my first release.</p>
+<h2 id="use-your-own-code">Use your own code</h2>
+<p>This one seems strange or obvious. You may be thinking, <em>how can I avoid using my code when writing tests?</em> You would be correct. But writing tests often checks for edge cases, simple scenarios, or faulty behavior. I encourage you to write multiple <em>examples</em>. Writing an end-to-end example forces you to use every aspect of your API as intended for the next developer. I encountered a number of questions for myself while doing this, that I may not have otherwise caught:</p>
+<ul>
+<li>Should the fields on this public struct also be public?</li>
+<li>How am I expected to use the structs I am given?</li>
+<li>Do the methods make sense? Their inputs? Their outputs?</li>
+<li>Is the process of programming with the library intuitive?</li>
+<li>Are there any obvious API holes when building an application?</li>
+</ul>
+<p>I recommend writing examples as soon as you have public structures exposed. You will be forced to update them, sure, but I see that as a benefit. If you are committing to an API change, you will be <em>forced</em> to consider how it effects your end-user.</p>
+<h2 id="many-types-need-wrapping">Many types need wrapping</h2>
+<p>It is tempting to work directly with types you use from dependencies. For instance, when parsing a <code>headers</code> message read off of the wire, the result is a <code>Vec&#x3C;Header></code>. While this representation is exactly correct, in that a <code>Vec&#x3C;Header></code> is the message a peer will send us, it is insufficient in capturing all the constraints that are required when receiving block headers from peers. Notably, this <code>Vec&#x3C;Header></code> must:</p>
+<ul>
+<li>Adhere to the network difficulty adjustment</li>
+<li>Each header must satisfy its own target work requirement</li>
+<li>Each header must have a timestamp greater than the median time of the last 11 blocks</li>
+</ul>
+<p>These checks can bloat a function quickly, and would make the function hard to reason about, or make changes to. Instead, a new structure should be introduced that can validate a list of headers based on these requirements. Often, this is rightfully called a “new-type” pattern, where additional requirements are imposed on a primitive or collection. The result is a program that is far easier to reason about. First, we can parse the <code>Vec&#x3C;Header></code> into the new type, which I called <code>HeadersBatch</code>. The <code>HeadersBatch</code> has methods exposed that do each one of these validation checks. The function responsible for syncing the block headers may simply call these methods, making for code that is more readable and modular. In a library of significant code size, this was a crucial pattern to adopt, or else the library would be unreasonably hard to reason about and maintain.</p>
+<h2 id="mind-the-clone">Mind the <code>clone</code></h2>
+<p>If you listen to any talk about Rust, the speaker will often say something along the lines of “Why Rust?” and follow that question by saying Rust is fast and memory conservative. I don’t agree with that completely. Rust <em>allows</em> developers to write fast and memory conservative code, but Rust also allows for memory hungry programs too. It is easy to add <code>clone</code> to a struct as you are prototyping, but I try to avoid this even in early stages. If the program requires a <code>clone</code> to compile, oftentimes the function logic should be reconsidered. Using <code>clone</code> is a signal to me that my program may not be correct, not an edge case.</p>
+<p>It may not seem like a big deal, but it is why I use Rust in the first place. When choosing a language like Swift or Go, <em>everything</em> is reference counted. To beat the performance of garbage collected languages, it is important to realize a reference counter will outperform <code>clone</code>, and calling <code>clone</code> is not something to take lightly. Especially for large projects, the learning curve for Rust can be incredibly steep. Swift, Kotlin, or Go may be a better option to bring on more developers, so choosing Rust is no small consideration. To respect your own time and other contributors, make the most out of Rust, even if the compiler allows you to make memory-hungry choices.</p>
+<p>Of course, that doesn’t mean <code>clone</code> has to be avoided completely, but I suggest setting a boundary. Something like the following: I will only <code>clone</code> a struct if it is less than 50 bytes of memory.</p>
+<h2 id="get-creative">Get creative</h2>
+<p>A central theme of this project was memory-conservation. While I have thought about memory consequences before in previous code and libraries, the implications were far more understandable in those instances. I was dealing on the scale of fixed sized buffers, and small vectors. This project brought far more complexity, including a <code>tokio</code> runtime, parsing large messages and sharing them across threads, and managing large collections in the form of <code>BTreeMap</code> and <code>Vec</code>. To make sense of this overhead, I had to explore the tools available to me.</p>
+<p>I turned to my favorite learning platform, YouTube, to find some inspiration. Sure enough, I found an interesting profiling tool, <code>tokio-console</code>, that allowed me to profile the memory usage of my application. It was an essential tool in early development stages, when the structure of my project was not yet defined. And again, on YouTube I found a video from Apple on profiling programs in Xcode. When the project had matured more, I leveraged Xcode to see how a mobile application would perform with a node running in the background.</p>
+<h2 id="takeaways">Takeaways</h2>
+<ul>
+<li>Write examples early.</li>
+<li>Create abstraction, even if simple.</li>
+<li>Consider other languages. Not everything has to be in Rust.</li>
+<li>When using Rust, use it well. Only <code>clone</code> small objects.</li>
+<li>Find new ways to make your project fun and exciting.</li>
+</ul> </article>  </div>  </main> <footer class="animate"> <div class="mx-auto max-w-screen-sm px-5">  <div class="relative"> <div class="absolute right-0 -top-20"> <button id="back-to-top" class="relative group w-fit flex pl-8 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 left-2 -translate-y-1/2 size-4 stroke-2 fill-none stroke-current rotate-90"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-2 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 5 12 12 19" class="translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> <div class="text-sm">
+Back to top
+</div> </button> </div> </div> <div class="flex justify-between items-center"> <div>
+&copy; 2024 | @rustaceanrob </div> <div class="flex flex-wrap gap-1 items-center"> <button id="light-theme-button" aria-label="Light theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </button> <button id="dark-theme-button" aria-label="Dark theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button id="system-theme-button" aria-label="System theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect> <line x1="8" y1="21" x2="16" y2="21"></line> <line x1="12" y1="17" x2="12" y2="21"></line> </svg> </button> </div> </div>  </div> </footer> </body></html>

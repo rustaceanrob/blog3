@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://robnetzke.com/sitemap-index.xml
+Sitemap: https://rustaceanrob.github.io/sitemap-index.xml

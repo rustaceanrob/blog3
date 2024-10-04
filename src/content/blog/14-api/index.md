@@ -1,7 +1,7 @@
 ---
 title: "Building APIs in Rust"
 date: "September 21 2024"
-description: ""
+description: "Tips and tricks along the way"
 
 ---
 
@@ -19,6 +19,7 @@ This one seems strange or obvious. You may be thinking, _how can I avoid using m
 - Are there any obvious API holes when building an application? 
 
 I recommend writing examples as soon as you have public structures exposed. You will be forced to update them, sure, but I see that as a benefit. If you are committing to an API change, you will be _forced_ to consider how it effects your end-user. 
+
 ## Many types need wrapping
 
 It is tempting to work directly with types you use from dependencies. For instance, when parsing a `headers` message read off of the wire, the result is a `Vec<Header>`. While this representation is exactly correct, in that a `Vec<Header>` is the message a peer will send us, it is insufficient in capturing all the constraints that are required when receiving block headers from peers. Notably, this `Vec<Header>` must:
@@ -27,13 +28,15 @@ It is tempting to work directly with types you use from dependencies. For instan
 - Each header must have a timestamp greater than the median time of the last 11 blocks
 
 These checks can bloat a function quickly, and would make the function hard to reason about, or make changes to. Instead, a new structure should be introduced that can validate a list of headers based on these requirements. Often, this is rightfully called a "new-type" pattern, where additional requirements are imposed on a primitive or collection. The result is a program that is far easier to reason about. First, we can parse the `Vec<Header>` into the new type, which I called `HeadersBatch`. The `HeadersBatch` has methods exposed that do each one of these validation checks. The function responsible for syncing the block headers may simply call these methods, making for code that is more readable and modular. In a library of significant code size, this was a crucial pattern to adopt, or else the library would be unreasonably hard to reason about and maintain.
-## Mind the `clone
+
+## Mind the `clone`
 
 If you listen to any talk about Rust, the speaker will often say something along the lines of "Why Rust?" and follow that question by saying Rust is fast and memory conservative. I don't agree with that completely. Rust _allows_ developers to write fast and memory conservative code, but Rust also allows for memory hungry programs too. It is easy to add `clone` to a struct as you are prototyping, but I try to avoid this even in early stages. If the program requires a `clone` to compile, oftentimes the function logic should be reconsidered. Using `clone` is a signal to me that my program may not be correct, not an edge case. 
 
 It may not seem like a big deal, but it is why I use Rust in the first place. When choosing a language like Swift or Go, _everything_ is reference counted. To beat the performance of garbage collected languages, it is important to realize a reference counter will outperform `clone`, and calling `clone` is not something to take lightly. Especially for large projects, the learning curve for Rust can be incredibly steep. Swift, Kotlin, or Go may be a better option to bring on more developers, so choosing Rust is no small consideration. To respect your own time and other contributors, make the most out of Rust, even if the compiler allows you to make memory-hungry choices. 
 
 Of course, that doesn't mean `clone` has to be avoided completely, but I suggest setting a boundary. Something like the following: I will only `clone` a struct if it is less than 50 bytes of memory.
+
 ## Get creative
 
 A central theme of this project was memory-conservation. While I have thought about memory consequences before in previous code and libraries, the implications were far more understandable in those instances. I was dealing on the scale of fixed sized buffers, and small vectors. This project brought far more complexity, including a `tokio` runtime, parsing large messages and sharing them across threads, and managing large collections in the form of `BTreeMap` and `Vec`. To make sense of this overhead, I had to explore the tools available to me. 
