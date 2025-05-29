@@ -15,6 +15,12 @@ const { title, description } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Rob's Blog"
+      href={new URL("rss.xml", Astro.site)}
+    />
     <Head title={`${title} | ${SITE.NAME}`} description={description} />
   </head>
   <body>
