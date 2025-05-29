@@ -5,8 +5,6 @@ description: "The dirty secret git doesn't want you to know about!"
 
 ---
 
-I cannot stand resolving merge conflicts. Vim, mergetool, or VSCode, I hate it all. This quick article shares a simple trick to avoid merge conflicts, and fix things as they break on a pull request. 
-
 #### The Situation
 
 You can try this strategy if:

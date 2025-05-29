@@ -1,5 +1,5 @@
 ---
-title: "Kick React Native"
+title: "It's Over for React Native"
 description: "I went with Swift, and I can't go back"
 date: "Jan 18 2024"
 ---
