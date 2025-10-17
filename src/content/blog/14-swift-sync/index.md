@@ -4,7 +4,7 @@ date: "October 14 2025"
 description: "Speeding up initial block download"
 ---
 
-I still remember my first time running `bitcoind` from the command line. The experience stuck out, as the initial block download (IBD) took around a week. To be fair, I was using a very old external hard disk, but waiting that long to use an application isn't exactly a great UX. I hadn't given it much thought since, but since coming to [2140](https://2140.dev/), IBD has been top of mind. My colleague Ruben developed a [novel scheme](https://gist.github.com/RubenSomsen/a61a37d14182ccd78760e477c78133cd) for speeding up IBD when starting a new bitcoin node. This blog walks through his proposal, SwiftSync, and some of the unexpected findings I had along the way when implementing it.
+My first `bitcoind` initial block download (IBD) took around a week. To be fair, I was using a very old external hard disk, but waiting that long to use an application isn't exactly a great UX. I hadn't given it much thought since, but since coming to [2140](https://2140.dev/), IBD has been top of mind. My colleague Ruben developed a [novel scheme](https://gist.github.com/RubenSomsen/a61a37d14182ccd78760e477c78133cd) for speeding up IBD when starting a new bitcoin node. This blog walks through his proposal, SwiftSync, and some of the unexpected findings I had along the way when implementing it.
 
 # Intuition
 
@@ -48,7 +48,7 @@ This is obvious, but it is important to point this equation out. In our SwiftSyn
 (0 + I - I) % m == 0
 ```
 
-With this single 256-bit aggregate, we can say the following: If someone gave me the correct hints for the UTXO set, the input `OutPoint` we hash and subtract from the aggregate will be the same as the output `OutPoint` we hash and add to the aggregate, in which case our aggregate will be `0` when arriving at the stop hash. At this point, you may want to review the algorithm once more.
+With this single 256-bit aggregate, we can say the following: If someone gave us the correct hints for the UTXO set, the input `OutPoint` we hash and subtract from the aggregate will be the same as the output `OutPoint` we hash and add to the aggregate, in which case our aggregate will be `0` when arriving at the stop hash. At this point, you may want to review the algorithm once more.
 
 # Observations
 
@@ -68,9 +68,9 @@ Griefing is possible however. Imagine an adversary creates a hint file for an in
 
 # Findings
 
-I implemented this method of IBD [here](https://github.com/2140-dev/swiftsync). You may try it for yourself by running the [`binary`](https://github.com/2140-dev/swiftsync/tree/master/node). In completing this proof-of-concept, I ran into some unexpected results. For one, I haven't built a program that does this many hashes. I quickly hit bottlenecks when attempting to perform all these hashes on a single thread, to the point where I never had an IBD complete without becoming impatient. The solution is simple, pre-compute the hash on a separate thread before updating the aggregate, `agg`.
+I implemented this method of IBD [here](https://github.com/2140-dev/swiftsync). You may try it for yourself by running the [`binary`](https://github.com/2140-dev/swiftsync/tree/master/node). In completing this proof-of-concept, I ran into some unexpected results. 
 
-The next finding is more interesting. When using my machine at home, the primary factor limiting my IBD speed using SwiftSync appeared to be my bandwidth. Even with 32 peers and many threads working, the throughput lead to somewhat underwhelming results at home. Contrasting this with a Hetzner server with similar specifications, I was pleasantly surprised. With the same IBD configuration, the one-gigabit connection for the Hetzner machine was able to chew through blocks extremely fast - I was able to do IBDs in around 1 hour 45 minutes on average. Take this in contrast with my laptop. At home, IBD took roughly 8 hours without SwiftSync. With SwiftSync, there was still an improvement, although it came in at roughly 4 hours in the best case.
+When using my machine at home, the primary factor limiting my IBD speed using SwiftSync appeared to be my bandwidth. Even with 32 peers and many threads working, the throughput lead to somewhat underwhelming results at home. Contrasting this with a Hetzner server with similar specifications, I was pleasantly surprised. With the same IBD configuration, the one-gigabit connection for the Hetzner machine was able to chew through blocks extremely fast - I was able to do IBDs in around 1 hour 45 minutes on average. Take this in contrast with my laptop. At home, IBD took roughly 8 hours without SwiftSync. With SwiftSync, there was still an improvement, although it came in at roughly 4 hours in the best case.
 
 This has definitely left an impression on me, as I disregarded bandwidth as a "solved bottleneck" in my mind prior to the project. On the contrary, any savings we can glean from wire-representation of data appears to be meaningful. I plan to follow-up with research on transaction representations in the near future.
 
