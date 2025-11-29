@@ -14,11 +14,11 @@ Short aside, I will only be considering the "assume valid" version of SwiftSync,
 
 SwiftSync builds on the observation that the sum of all outputs ever created minus the sum of all inputs ever created is equivalent to the UTXO set.
 
-![TXO SET](https://quicklatex.com/cache3/d6/ql_39974d24ec10c5b06108ef57dd15b5d6_l3.png)
+`all outputs - all inputs = UTXO set`
 
 Put another way, by subtracting all the UTXOs from the left-hand-size, we have:
 
-![TXO SET](https://quicklatex.com/cache3/e4/ql_fe39fe944f3228529227ffd90ea463e4_l3.png)
+`all outputs - UTXO set - all inputs = empty set`
 
 This is a powerful fact, as it implies that the set of inputs and the set of outputs should be equivalent sets, as long as we _omit_ outputs that are in the UTXO set. From here we can use some simple math to develop a neat way of doing IBD.
 
