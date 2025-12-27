@@ -39,33 +39,10 @@ const work = await Promise.all(
       <section>
         <article class="space-y-4">
           <p class="animate">
-              I'm an open source contributor making my pull requests in <b>Rust</b>, with occasional contributions in Swift, Python, or Kotlin.
-              I maintain a few libraries that implement Bitcoin protocols: <a href="https://github.com/2140-dev/kyoto" target="_blank"><b>Kyoto</b></a>, a memory-conservative, privacy-focused
-              Bitcoin light-client that behaves similarly to a Bitcoin node, and a
-                <a href="https://github.com/rust-bitcoin/bip324" target="_blank"><b>library</b></a> which implements peer-to-peer encrypted
-                communication over the Bitcoin protocol. I work at <a href="https://2140.dev/" target="_blank"><b>2140</b></a> to maintain these libraries, among other contributions and experimental projects.
+              I'm an open-source contributor primarily working on Bitcoin and related software. This is a blog that follows my work.
           </p>
         </article>
       </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Pinned projects
-          </h5>
-          <!-- <Link href="/projects">
-            See all projects
-          </Link> -->
-        </div>
-        <ul class="flex flex-col gap-4">
-          {projects.map(project => (
-            <li>
-              <ArrowCard entry={project} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
       <section class="animate space-y-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
           <h5 class="font-semibold text-black dark:text-white">
@@ -83,16 +60,30 @@ const work = await Promise.all(
           ))}
         </ul>
       </section>
+      <!-- <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">
+            Pinned projects
+          </h5>
+          <Link href="/projects">
+            See all projects
+          </Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {projects.map(project => (
+            <li>
+              <ArrowCard entry={project} />
+            </li>
+          ))}
+        </ul>
+      </section> -->
+
+
 
       <section class="animate space-y-4">
         <h5 class="font-semibold text-black dark:text-white">
-          Get in touch
+          Follow me
         </h5>
-        <article>
-          <p>
-            If you want to get in touch with me about something, shoot me an email.
-          </p>
-        </article>
         <ul class="flex flex-wrap gap-2">
           {SOCIALS.map(SOCIAL => (
             <li class="flex gap-x-2 text-nowrap">
@@ -102,17 +93,12 @@ const work = await Promise.all(
               {"/"}
             </li>
           ))}
-          <li class="line-clamp-1">
-            <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
-              {SITE.EMAIL}
-            </Link>
-          </li>
         </ul>
       </section>
 
-      <section class="animate space-y-6">
-        <h5 class="font-semibold text-sm text-black dark:text-white">
-          PGP Keys
+      <section class="animate space-y-4">
+        <h5 class="font-semibold text-black dark:text-white">
+          PGP keys
         </h5>
         <p class = "font-mono">C9FB C331 E4E8 3ECD 5CD0 B5AC F4DD 8F84 86EC 0F1F</p>
         <!-- <p class = "font-mono">Email: 1A97 AA62 7ECB 9066 3B48 94CE 7DE6 1FF5 3AD9 7271</p> -->
