@@ -33,8 +33,8 @@ export const SOCIALS: Socials = [
     NAME: "github",
     HREF: "https://github.com/rustaceanrob"
   },
-  {
-    NAME: "linkedin",
-    HREF: "https://www.linkedin.com/in/robnetzke",
-  }
+  // {
+    // NAME: "linkedin",
+    // HREF: "https://www.linkedin.com/in/robnetzke",
+  // }
 ];
